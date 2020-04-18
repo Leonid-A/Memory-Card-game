@@ -1,0 +1,50 @@
+*{
+    box-sizing:border-box;
+}
+
+body{
+    background-color: black;
+}
+
+#parent-div{
+    width:490px;
+    height:490px;
+    display:flex;
+    flex-wrap:wrap;
+    margin:50px auto;
+    justify-content: space-around;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.card-item{
+    width:100px;
+    height:100px;
+    position:relative;
+    font-size:50px;
+    cursor: pointer;
+    transform-style:preserve-3d;
+    transition: transform .3s;
+} 
+
+.front-side, .back-side {
+    position:absolute;
+    border-radius:7px;
+    display:block;
+    width:100px;
+    height:100px;
+    padding:25px;
+    background-color:#4dabf7;
+    color:yellow;
+    backface-visibility: hidden;
+}
+
+.flip{
+    transform: rotateY(180deg);
+}
+
+.back-side{
+    transform:rotateY(180deg);
+    color:white;
+}
+
