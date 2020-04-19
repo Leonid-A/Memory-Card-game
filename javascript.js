@@ -1,6 +1,10 @@
 "use strict";
 
 const cardsConteiner = document.getElementById("parent-div");
+let displayCount = document.getElementById("step");
+let displayTimer = document.getElementById("timer");
+const startGame = document.getElementById("st-button");
+const fullReset = document.getElementById("res-button");
 const appMainObj = {
     cardsImages: [
         '<i data-id="1" class="fas fa-poo"></i>', 
@@ -74,6 +78,7 @@ function flipCard(event){
         addCountandFlip()
         appMainObj.secondCard = event.currentTarget;
         appMainObj.CounterForScreen++;
+        displayCount.innerText = "Step: " + appMainObj.CounterForScreen;
         const fId = appMainObj.firstCard.querySelector('.back-side > i').getAttribute("data-id");
         const sId = appMainObj.secondCard.querySelector('.back-side > i').getAttribute("data-id");
 
@@ -82,8 +87,9 @@ function flipCard(event){
             appMainObj.secondCard.removeEventListener("click", flipCard, false);
             appMainObj.winnerArr.push(event.currentTarget);
             clear();
+               
                 if (appMainObj.winnerArr.length === 8){
-                    console.log(appMainObj.CounterForScreen++);
+                    console.log(appMainObj.CounterForScreen);
                     alert("Wiiiiiiiiiiiiiner")
                 }
         }
@@ -107,3 +113,25 @@ function addCountandFlip() {
     appMainObj.clickCount++;
     event.currentTarget.classList.add("flip");
 }
+
+fullReset.addEventListener("click", resetAll,false);
+// startGame.addEventListener("click", gameStarted,false);
+
+function resetAll(){
+    clear();
+    appMainObj.CounterForScreen = 0;
+    displayCount.innerText = "Step: " + appMainObj.CounterForScreen;
+    for (let i=0, length = appMainObj.uIcardItems.length; i<length; i++) {
+        let everyItem = appMainObj.uIcardItems[i];
+        everyItem.classList.remove("flip");
+        everyItem.addEventListener("click", flipCard, false);
+    }
+     appMainObj.winnerArr = [];
+}
+
+// function gameStarted(){
+//    let currentTime = timer.getElapsedTime();
+//    displayTimer.innerHTML = "Timer" + currentTime;
+    
+// }
+
