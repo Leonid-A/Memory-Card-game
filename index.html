@@ -7,16 +7,20 @@
     <body>
         <div class="control-panel">
             <label for="fname" class="input-header">Please Type Name</label><br><br>
-            <input type="text" id="fname" name="fname" pattern="[A-Za-z]"><br><br>
+            <input type="text" id="fname" name="fname"><br><br>
+            <p id="alert-place"></p>
             <button id="st-button">Start</button>
             <button id="res-button">Reset</button><br>
-            
         </div>
         <div id="winners">
             <h1 class="scores-head">Scores</h1>
+            <div id="table">
+                <span class="table-name">Name</span>
+                <span class="table-time">Time</span>
+                <span class="table-steps">Steps</span>
+            </div>
         </div>
-        <div id="parent-div">
-        </div>
+        <div id="parent-div"></div>
         <div class="display">
             <p id="timer" >Timer: 00:00</p>
             <p id="step">Step: 0</p>

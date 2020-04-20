@@ -67,7 +67,6 @@ body{
     position:absolute;
     left:30px;
     top: 50px;
-
 }
 
 #res-button, #st-button{
@@ -102,11 +101,38 @@ body{
 .scores-head{
     margin: 15px 0 0;
     text-align:center;
-    
 }
 
 .display{
     margin:0 auto;
-    width:370px;
+    width:380px;
+}
 
+#alert-place{
+    height:20px;
+    color:red;
+    font-size:16px;
+}
+
+#table{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.table-steps{
+    width:70px;
+}
+
+.table-time{
+    width:90px;
+}
+
+.table-name{
+    width:120px;
+}
+
+.table-steps, .table-time, .table-name{
+    margin-top:10px;
+    margin-bottom:0;
 }

@@ -5,6 +5,11 @@ let displayCount = document.getElementById("step");
 let displayTimer = document.getElementById("timer");
 const startGame = document.getElementById("st-button");
 const fullReset = document.getElementById("res-button");
+const alertDisp = document.getElementById("alert-place");
+const checkName = document.getElementById("fname");
+let winnersList = document.getElementById("table")
+let letters = /^[a-zA-Z]+$/;
+let ddd;
 const appMainObj = {
     cardsImages: [
         '<i data-id="1" class="fas fa-poo"></i>', 
@@ -30,8 +35,14 @@ const appMainObj = {
     secondCard : null,
     clickCount : 0,
     winnerArr : [],
-    CounterForScreen: 0
+    CounterForScreen: 0,
+    timerMinutes : 0,
+    timerSeconds : 0,
+    gamerName : "",
+    checkClick : false,
 }
+
+    // game started
 start()
 function start(){
     shuffleandDrow();
@@ -39,6 +50,7 @@ function start(){
     listenOnClick();
 }
 
+    // cards shuffle and taking all card by className
 function shuffleandDrow() {
     let allCards = ""; 
     const imgs = appMainObj.cardsImages;
@@ -55,23 +67,30 @@ function shuffleandDrow() {
 
 function setuICardItems(){
     appMainObj.uIcardItems = document.getElementsByClassName("card-item")
-}
+};
 
+    //adding click event to cards
 function listenOnClick(){
     for (let i=0, length = appMainObj.uIcardItems.length; i<length; i++) {
-        let everyItem = appMainObj.uIcardItems[i];
-        everyItem.addEventListener("click", flipCard, false);
+    let everyItem = appMainObj.uIcardItems[i];
+    everyItem.addEventListener("click", flipCard, false);
+    
     }
 }
 
+    //flip card main function
 function flipCard(event){
-
     if (appMainObj.firstCard === event.currentTarget) {
        return
     }
 
     if (appMainObj.clickCount === 0){
+        if (!appMainObj.checkClick){
+            alert("Please type your Name and press Start");
+            return;
+        } 
         addCountandFlip()
+        startGame.removeEventListener("click", gameStarted, false);
         appMainObj.firstCard = event.currentTarget;
     }
     else if (appMainObj.clickCount === 1)  {
@@ -81,17 +100,20 @@ function flipCard(event){
         displayCount.innerText = "Step: " + appMainObj.CounterForScreen;
         const fId = appMainObj.firstCard.querySelector('.back-side > i').getAttribute("data-id");
         const sId = appMainObj.secondCard.querySelector('.back-side > i').getAttribute("data-id");
-
         if (fId === sId){
             appMainObj.firstCard.removeEventListener("click", flipCard, false);
             appMainObj.secondCard.removeEventListener("click", flipCard, false);
             appMainObj.winnerArr.push(event.currentTarget);
             clear();
-               
-                if (appMainObj.winnerArr.length === 8){
-                    console.log(appMainObj.CounterForScreen);
-                    alert("Wiiiiiiiiiiiiiner")
-                }
+            if (appMainObj.winnerArr.length === 8){
+                console.log(appMainObj.CounterForScreen);
+                let winnersOutput = winnersList.innerHTML;
+                winnersOutput +="<p class='table-name'>" + appMainObj.gamerName + "</p><p class='table-time'>"+ appMainObj.timerMinutes + ":"+ appMainObj.timerSeconds + "</p><p class='table-steps'>" + appMainObj.CounterForScreen + "</p>";
+                winnersList.innerHTML = winnersOutput;
+                startGame.addEventListener("click", gameStarted,false);
+                StopTimer()
+                alert("Wiiiiiiiiiiiiiner")
+            }     
         }
         else{
             setTimeout(()=>{
@@ -103,35 +125,88 @@ function flipCard(event){
     }
 }
 
-function clear(){
-    appMainObj.clickCount = 0;
-    appMainObj.firstCard = null;
-    appMainObj.secondCard = null;
-}
-
+    //counting and give class flip
 function addCountandFlip() {
     appMainObj.clickCount++;
     event.currentTarget.classList.add("flip");
 }
 
-fullReset.addEventListener("click", resetAll,false);
-// startGame.addEventListener("click", gameStarted,false);
+    // clear card counter and cards
+function clear(){
+    appMainObj.clickCount = 0;
+    appMainObj.firstCard = null;
+    appMainObj.secondCard = null;
+}
+    //stop timer
+function StopTimer() {
+    clearInterval(ddd);
+    appMainObj.timerMinutes = 0;
+    appMainObj.timerSeconds = 0;
+  }
 
-function resetAll(){
-    clear();
-    appMainObj.CounterForScreen = 0;
-    displayCount.innerText = "Step: " + appMainObj.CounterForScreen;
+    //listing cards for removing flips and givein click event
+function listingCards(){
     for (let i=0, length = appMainObj.uIcardItems.length; i<length; i++) {
         let everyItem = appMainObj.uIcardItems[i];
         everyItem.classList.remove("flip");
         everyItem.addEventListener("click", flipCard, false);
-    }
-     appMainObj.winnerArr = [];
+    };
+};
+
+    //function for clear inpute div
+function firstPosition(){
+    alertDisp.innerText = "";
+    checkName.style.borderColor = "initial";
+    checkName.value = "";
 }
 
-// function gameStarted(){
-//    let currentTime = timer.getElapsedTime();
-//    displayTimer.innerHTML = "Timer" + currentTime;
-    
-// }
+    //reset button
+fullReset.addEventListener("click", resetAll,false);
+function resetAll(){
+    StopTimer();
+    displayTimer.innerHTML = "Timer: 00:00"
+    shuffleandDrow();
+    firstPosition();
+    clear();
+    listingCards();
+    appMainObj.checkClick = false;
+    startGame.addEventListener("click", gameStarted,false);
+    appMainObj.gamerName = "";
+    appMainObj.CounterForScreen = 0;
+    displayCount.innerText = "Step: " + appMainObj.CounterForScreen;
+    appMainObj.winnerArr = [];
+}
+
+    //start button with timer
+startGame.addEventListener("click", gameStarted,false);
+function gameStarted(){
+    appMainObj.checkClick = true;
+    shuffleandDrow();
+    listingCards();
+    appMainObj.CounterForScreen = 0;
+    displayCount.innerText = "Step: " + appMainObj.CounterForScreen;
+    appMainObj.winnerArr = [];
+    if (!checkName.value.match(letters)){
+        checkName.style.borderColor = "red";
+        alertDisp.innerText = "Type only letters";
+    } 
+    else{
+        appMainObj.gamerName = checkName.value;
+        firstPosition();
+        console.log(appMainObj.gamerName);
+        displayTimer.innerHTML = "Timer: 00:00"
+        ddd = setInterval(function (){
+            appMainObj.timerSeconds ++;
+            if (appMainObj.timerSeconds === 60){
+                appMainObj.timerMinutes++;
+                appMainObj.timerSeconds = 0;
+                if (appMainObj.timerMinutes === 60){
+                        alert("GAME OVER")
+                        resetAll();
+                }
+            }
+        displayTimer.innerHTML = "Timer: " + appMainObj.timerMinutes+" : "+appMainObj.timerSeconds;
+        },1000);
+    }
+}
 
