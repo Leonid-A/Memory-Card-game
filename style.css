@@ -105,13 +105,20 @@ body{
 
 .display{
     margin:0 auto;
-    width:380px;
+    width:390px;
 }
 
 #alert-place{
     height:20px;
     color:red;
     font-size:16px;
+}
+
+.table-head{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: 10px;
 }
 
 #table{
@@ -130,6 +137,7 @@ body{
 
 .table-name{
     width:120px;
+    overflow:hidden;
 }
 
 .table-steps, .table-time, .table-name{
