@@ -1,60 +1,114 @@
 function addPlayersScores(){
-    let winnersOutput = winnersList.innerHTML;
-    winnersOutput +="<p class='table-name'>" + appMainObj.gamerName + "</p><p class='table-time'>"+ appMainObj.timerMinutes + ":"+ appMainObj.timerSeconds + "</p><p class='table-steps'>" + appMainObj.CounterForScreen + "</p>";
-    winnersList.innerHTML = winnersOutput;
-    if (players === null){
-        writePlayer();
-        players =[appMainObj.newPlayer];   //datark arrayin chem kara pus anem?
+    let index = -1;
+    if (players){
+        index = players.findIndex(({name}) => name === appMainObj.gamerName);
     }
     else{
-    const index = players.findIndex(({name})=> name === appMainObj.gamerName);
-        if (index !== -1){
-            const playerScore = {
-                minutes:appMainObj.timerMinutes,
-                seconds:appMainObj.timerSeconds,
-                steps:appMainObj.CounterForScreen
-            };
-            players[index].scores.push(playerScore);
-        }
-        else{
-        writePlayer();
-            players.push(appMainObj.newPlayer);
+        players = [];
+    }
+    
+    if (index === -1) {
+        index = players.length;
+        players[index] = {
+            name:appMainObj.gamerName,
+            scores: []
         }
     }
-    let playersObj = JSON.stringify(players);
-    localStorage.setItem("winners", playersObj);
+    sortByIncrement(index);
+    sliceToTen(index);
+    drawWinnersTable(players[index]);
+    localStorage.setItem("winners", JSON.stringify(players));
+}
+
+function sortByIncrement(index){
+    let scoreIndex;
+    appMainObj.timerSeconds+=appMainObj.timerMinutes*60  ;
+    const playerScore = {
+        seconds: appMainObj.timerSeconds,
+        steps: appMainObj.counterForScreen
+    };
+    if (players[index].scores.length > 1){
+            scoreIndex = players[index].scores.findIndex(item => {
+            if ((item.seconds*item.steps) > (appMainObj.timerSeconds * appMainObj.counterForScreen)){return true};
+        });
+        if (scoreIndex !== -1){
+        players[index].scores.splice(scoreIndex,0,playerScore);
+        return;
+        }
+    }
+    players[index].scores.push(playerScore);
+}
+
+function sliceToTen(index){
+    if (players[index].scores.length>10){
+        players[index].scores= players[index].scores.slice(0,10);
+    }
 }
 
 function getPlayersScores(){
-    let winnersOutput = "";
-    let playersObj = localStorage.getItem("winners");
-    players = JSON.parse(playersObj);
+    players = JSON.parse(localStorage.getItem("winners"));
     if (players === null){
-          return;
+        return;
     };
     const gamingPlayer = players.find(person => person.name == appMainObj.gamerName);
-    if ( gamingPlayer !== undefined){
+    drawWinnersTable(gamingPlayer)
+};
+
+function drawWinnersTable(gamingPlayer) {
+    let winnersOutput = '';
+    if (gamingPlayer){
         gamingPlayer.scores.forEach(item => {
-            winnersOutput +="<p class='table-name'>" + gamingPlayer.name + "</p><p class='table-time'>"+ item.minutes + ":"+ item.seconds + "</p><p class='table-steps'>" + item.steps + "</p>";
+            let minutes = parseInt(item.seconds/60);
+            let seconds = item.seconds%60;
+            winnersOutput +=`<p class='user-name'>${gamingPlayer.name}</p><p class='user-time'>${minutes}m ${seconds}s</p><p class='user-steps'>${item.steps}</p>`;
+        });
+    } 
+    winnersList.innerHTML = winnersOutput;
+}
+
+function addBestScores(){
+    const newBest = {
+        name: appMainObj.gamerName,
+        scores: {
+            seconds:appMainObj.timerSeconds,
+            steps: appMainObj.counterForScreen
+        } 
+    }
+    let bestScoreIndex = -1;
+    if(bestScores){
+        bestScoreIndex = bestScores.findIndex(element => {
+            if (element.scores.seconds*element.scores.steps>appMainObj.timerSeconds*appMainObj.counterForScreen){
+                return true;
+            }
         });
     }
     else{
-        players.forEach(element => {
-            element.scores.forEach(item => {
-                winnersOutput +="<p class='table-name'>" + element.name + "</p><p class='table-time'>"+ item.minutes + ":"+ item.seconds + "</p><p class='table-steps'>" + item.steps + "</p>";
-            })
-        })
+        bestScores = [];
     };
-    winnersList.innerHTML = winnersOutput;    
-};
 
-function writePlayer(){
-    appMainObj.newPlayer = {
-        name:appMainObj.gamerName,
-        scores:[{
-            minutes:appMainObj.timerMinutes,
-            seconds:appMainObj.timerSeconds,
-            steps:appMainObj.CounterForScreen
-        }]
+    if (bestScoreIndex === -1){
+        bestScores.push(newBest);
+    }
+    else{
+        bestScores.splice(bestScoreIndex,0,newBest);
     };
-};
+
+    if (bestScores.length >3) {
+        bestScores = bestScores.slice(0,3);  
+    };
+    localStorage.setItem("bestScores", JSON.stringify(bestScores));
+    drawBestScores();
+}
+
+function drawBestScores() {
+    bestScores = JSON.parse(localStorage.getItem("bestScores"));
+    let bestScoresOutput = "";
+    if (bestScores){
+        bestScores.forEach((item,index) => {
+            let minutes = parseInt(item.scores.seconds/60);
+            let seconds = item.scores.seconds%60;
+            bestScoresOutput+= `<p class='user-img'>${index+1}. ${appMainObj.cupArr[index]}</p><p class='user-name'>${item.name}</p><p class='user-time'>${minutes}m ${seconds}s</p><p class='user-steps'>${item.scores.steps}</p>`;
+        })
+    }
+    bestScoresDisplay.innerHTML =  bestScoresOutput;
+}

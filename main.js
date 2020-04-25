@@ -6,10 +6,16 @@ const displayTimer = document.getElementById("timer");
 const startGame = document.getElementById("st-button");
 const fullReset = document.getElementById("res-button");
 const alertDisp = document.getElementById("alert-place");
-const userName = document.getElementById("fname");
-const winnersList = document.getElementById("table");
+let userName = document.getElementById("fname");
+const winnersList = document.getElementById("user-scores");
+const bestScoresDisplay = document.getElementById("best-scores");
+const screenChange = document.getElementsByClassName("screen-change");
+const winAlert = document.getElementsByClassName("win-alert");
+const playAgain = document.getElementById("play-again");
+const endGame = document.getElementById("end-game");
 const letters = /^[a-zA-Z]+$/;
 let players = [];
+let bestScores = [];
 let timerInterval;
 const appMainObj = {
     cardsImages: [
@@ -41,7 +47,8 @@ const appMainObj = {
     timerSeconds : 0,
     gamerName : "",
     allowPlay : false,
-    newPlayer: {}
+    newPlayer: {},
+    cupArr:['<i class="fas fa-trophy gold"></i>','<i class="fas fa-trophy silver"></i>','<i class="fas fa-trophy bronze"></i>']
 }
 
 start()
@@ -50,9 +57,11 @@ function start(){
     shuffleandDrow();
     setuICardItems();
     listenOnClick();
-    getPlayersScores();
+    drawBestScores();
     fullReset.addEventListener("click", resetAll,false);
     startGame.addEventListener("click", gameStarted,false);
+    playAgain.addEventListener("click", startAgain,false);
+    endGame.addEventListener("click", resetAll,false);
 }
 
     // cards shuffle and taking all card by className
@@ -89,11 +98,11 @@ function flipCard(event){
     }
     if (appMainObj.clickCount === 0){
         if (!appMainObj.allowPlay){
-            alert("Please type your Name and press Start");
+            userName.style.borderColor = "red";
+            alertDisp.innerText = "Please type your name";
             return;
         } 
         addCountAndFlip()
-        startGame.removeEventListener("click", gameStarted, false);
         appMainObj.firstCard = event.currentTarget;
     }
     else if (appMainObj.clickCount === 1)  {
@@ -115,9 +124,12 @@ function checkWin(){
         clearCouple();
         if (appMainObj.openedCouple === 8){
             startGame.addEventListener("click", gameStarted,false);
+            startGame.removeAttribute("disabled");
+            userName.removeAttribute("disabled");
             addPlayersScores();
+            addBestScores();
             stopTimer();
-            setTimeout(() => alert("Wiiiiiiiiiiiiiner"));
+            alertShow();
         }     
     }
     else{
@@ -127,6 +139,11 @@ function checkWin(){
             clearCouple();
         },800);
     }
+}
+
+function alertShow(){
+    screenChange[0].classList.add("screen-change-active");
+    winAlert[0].classList.add("win-alert-active");
 }
 
     //counting and give class flip
@@ -159,23 +176,28 @@ function listingCards(){
 
     //function for clear inpute div
 function firstPosition(){
-    alertDisp.innerText = "";
     userName.style.borderColor = "initial";
     userName.value = "";
 }
 
     //reset button
 function resetAll(){
+    screenChange[0].classList.remove("screen-change-active");
+    winAlert[0].classList.remove("win-alert-active");
     stopTimer();
-    displayTimer.innerHTML = "Timer: 00:00"
+    displayTimer.innerHTML = "Timer: 0m 0s"
     shuffleandDrow();
     firstPosition();
+    alertDisp.innerText = "";
     clearCouple();
     listingCards();
     appMainObj.allowPlay = false;
     startGame.addEventListener("click", gameStarted,false);
+    startGame.removeAttribute("disabled");
+    userName.removeAttribute("disabled");
     appMainObj.gamerName = "";
     clearSteps()
+    winnersList.innerHTML = "";
 }
 
 function checkUserName(){
@@ -198,17 +220,29 @@ function clearSteps(){
     appMainObj.openedCouple = 0;
 }
 
+function startAgain(){
+    userName.value = appMainObj.gamerName;
+    screenChange[0].classList.remove("screen-change-active");
+    winAlert[0].classList.remove("win-alert-active");
+    gameStarted();
+    console.log(userName.value)
+}
+
     //start button with timer
 function gameStarted(){
     shuffleandDrow();
     clearSteps()
     if (checkUserName()){
+        alertDisp.innerText = "Hello " + userName.value;
         appMainObj.allowPlay = true;
+        startGame.removeEventListener("click", gameStarted, false);
+        startGame.setAttribute("disabled",true)
+        userName.setAttribute("disabled",true)
         listingCards();
         appMainObj.gamerName = userName.value;
         getPlayersScores();
         firstPosition();
-        displayTimer.innerHTML = "Timer: 00:00";
+        displayTimer.innerHTML = "Timer: 0m 0s";
         timerInterval = setInterval(function (){
             appMainObj.timerSeconds ++;
             if (appMainObj.timerSeconds === 60){
@@ -219,7 +253,7 @@ function gameStarted(){
                     resetAll();
                 }
             }
-            displayTimer.innerHTML = `Timer: ${appMainObj.timerMinutes} : ${appMainObj.timerSeconds}`;
+            displayTimer.innerHTML = `Timer: ${appMainObj.timerMinutes}m ${appMainObj.timerSeconds}s`;
         },1000);
     }
 }

@@ -6,6 +6,14 @@
         <script src="main.js" defer></script>
     </head>
     <body>
+        <div class="screen-change">
+        </div>
+        <div class = "win-alert">
+            <h1 class="alert-head">Congretulations!!! </h1>
+            <h3 class="alert-">Do you want to continue?</h3>
+            <p id="play-again">Play Again  <i class="fas fa-smile-wink smile"></i></p>
+            <p id="end-game">End Game <i class="fas fa-sad-tear smile"></i></p>
+        </div>
         <div class="control-panel">
             <label for="fname" class="input-header">Please Type Name</label><br><br>
             <input type="text" id="fname" name="fname"><br><br>
@@ -15,19 +23,29 @@
         </div>
         <div id="winners">
             <h1 class="scores-head">Scores</h1>
-            <div class="table-head">
-                <span class="table-name">Name</span>
-                <span class="table-time">Time</span>
-                <span class="table-steps">Steps</span>
-                <div id="table">
-
+            <div class="user-table-head">
+                <span class="user-name">Name</span>
+                <span class="user-time">Time</span>
+                <span class="user-steps">Steps</span>
+                <div id="user-scores">
                 </div>
             </div>
         </div>
-        <div id="parent-div"></div>
         <div class="display">
-            <p id="timer" >Timer: 00:00</p>
+            <p id="timer" >Timer: 0m 0s</p>
             <p id="step">Step: 0</p>
+        </div>
+        <div id="parent-div"></div>
+        <div id="best-three">
+            <h1 class="scores-head">Best Scores</h1>
+            <div class="user-table-head">
+                <span class="user-img"></span>
+                <span class="user-name">Name</span>
+                <span class="user-time">Time</span>
+                <span class="user-steps">Steps</span>
+                <div id="best-scores">
+                </div>
+            </div>
         </div>
     </body>
 </html>
