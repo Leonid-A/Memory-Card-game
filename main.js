@@ -18,24 +18,33 @@ let players = [];
 let bestScores = [];
 let timerInterval;
 const appMainObj = {
-    cardsImages: [
+    cardsImageStoreage: [
         '<i data-id="1" class="fas fa-poo"></i>', 
-        '<i data-id="1" class="fas fa-poo"></i>',
-        '<i data-id="2" class="fas fa-hand-holding-usd"></i>',
         '<i data-id="2" class="fas fa-hand-holding-usd"></i>',
         '<i data-id="3" class="fas fa-dove"></i>',
-        '<i data-id="3" class="fas fa-dove"></i>',
-        '<i data-id="4" class="fas fa-baby-carriage"></i>',
         '<i data-id="4" class="fas fa-baby-carriage"></i>',
         '<i data-id="5" class="fas fa-grin-tongue"></i>',
-        '<i data-id="5" class="fas fa-grin-tongue"></i>',
         '<i data-id="6" class="fas fa-hand-peace"></i>',
-        '<i data-id="6" class="fas fa-hand-peace"></i>',
-        '<i data-id="7" class="fas fa-anchor"></i>',
         '<i data-id="7" class="fas fa-anchor"></i>',
         '<i data-id="8" class="fas fa-dragon"></i>',
-        '<i data-id="8" class="fas fa-dragon"></i>'
+        '<i data-id="9" class="fas fa-bell"></i>',
+        '<i data-id="10" class="fas fa-bicycle"></i>',
+        '<i data-id="11" class="fas fa-bomb"></i>',
+        '<i data-id="12" class="fas fa-bullhorn"></i>',
+        '<i data-id="13" class="fas fa-cannabis"></i>',
+        '<i data-id="14" class="fas fa-carrot"></i>',
+        '<i data-id="15" class="fas fa-charging-station"></i>',
+        '<i data-id="16" class="fas fa-apple-alt"></i>',
+        '<i data-id="17" class="fas fa-car"></i>',
+        '<i data-id="18" class="fas fa-cut"></i>',
+        '<i data-id="19" class="fas fa-fighter-jet"></i>',
+        '<i data-id="20" class="fas fa-frog"></i>',
+        '<i data-id="21" class="fas fa-glass-cheers"></i>',
+        '<i data-id="22" class="fas fa-spider"></i>',
+        '<i data-id="23" class="fas fa-key"></i>',
+        '<i data-id="24" class="fas fa-smoking"></i>'
     ],
+    cardsImages: [],
     frontImage : "<i class='fab fa-js-square'></i>",
     uIcardItems : [],
     firstCard : null,
@@ -54,7 +63,7 @@ const appMainObj = {
 start()
     // game started
 function start(){
-    shuffleandDrow();
+    shuffleCardsStoreage()
     setuICardItems();
     listenOnClick();
     drawBestScores();
@@ -62,19 +71,37 @@ function start(){
     startGame.addEventListener("click", gameStarted,false);
     playAgain.addEventListener("click", startAgain,false);
     endGame.addEventListener("click", resetAll,false);
+    userName.addEventListener('keypress', enter, false );
+}
+
+function enter(b) {
+    if (b.key === 'Enter') {
+        gameStarted();        
+    }
+}
+
+function shuffleCardsStoreage(){
+    for(let hertakanItem, i=appMainObj.cardsImageStoreage.length-1; i>-1; --i){
+        const numRndm = parseInt(Math.random() * i);
+        hertakanItem = appMainObj.cardsImageStoreage[i];
+        appMainObj.cardsImageStoreage[i] = appMainObj.cardsImageStoreage[numRndm];
+        appMainObj.cardsImageStoreage[numRndm] = hertakanItem;
+    }
+    appMainObj.cardsImages = appMainObj.cardsImageStoreage.slice(10,18);
+    appMainObj.cardsImages.push.apply(appMainObj.cardsImages,appMainObj.cardsImages)
+    shuffleandDrow();
 }
 
     // cards shuffle and taking all card by className
 function shuffleandDrow() {
     let allCards = ""; 
     const imgs = appMainObj.cardsImages;
-    for(let j, hertakanItem, i = imgs.length-1; i > -1; --i){
+    for(let hertakanItem, i = imgs.length-1; i > -1; --i){
         const numRndm = parseInt(Math.random() * i);
         hertakanItem = imgs[i];
         imgs[i] = imgs[numRndm];
         imgs[numRndm] = hertakanItem;
-        allCards += `<div class='card-item'>
-        <span class='front-side'>${appMainObj.frontImage}</span><span class='back-side'>${imgs[i]}</span></div>` ;
+        allCards += `<div class='card-item'><span class='front-side'>${appMainObj.frontImage}</span><span class='back-side'>${imgs[i]}</span></div>` ;
     };
     cardsConteiner.innerHTML = allCards;
 };
@@ -186,7 +213,7 @@ function resetAll(){
     winAlert[0].classList.remove("win-alert-active");
     stopTimer();
     displayTimer.innerHTML = "Timer: 0m 0s"
-    shuffleandDrow();
+    shuffleCardsStoreage();
     firstPosition();
     alertDisp.innerText = "";
     clearCouple();
@@ -225,12 +252,11 @@ function startAgain(){
     screenChange[0].classList.remove("screen-change-active");
     winAlert[0].classList.remove("win-alert-active");
     gameStarted();
-    console.log(userName.value)
 }
 
     //start button with timer
 function gameStarted(){
-    shuffleandDrow();
+    shuffleCardsStoreage();
     clearSteps()
     if (checkUserName()){
         alertDisp.innerText = "Hello " + userName.value;
