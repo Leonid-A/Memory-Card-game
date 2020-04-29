@@ -1,0 +1,55 @@
+ #parent-div{
+    width:490px;
+    height:490px;
+    top:200px;
+}
+.card-item{
+    width:100px;
+    height:100px;
+    font-size:50px;
+} 
+.front-side, .back-side {
+    border-radius:7px;
+    width:100px;
+    height:100px;
+    padding:25px;
+}
+.input-header{
+    font-size:22px;
+}
+#fname{
+    width:250px;
+}
+.control-panel{
+    width:570px;
+}
+#winners{
+    height:340px;
+    top:750px;
+}
+.scores-head{
+    margin: 15px 0 0;
+} 
+.display{
+    width:400px;
+} 
+#best-three{
+    top: 1110px;
+    height:180px;
+}
+.win-alert{
+    height:200px;
+    width:500px;
+    top:-220px;
+    border-radius:7px;
+}
+.win-alert-active{
+    top:50px;
+}
+#play-again, #end-game{
+    margin:20px 10px;
+    font-size:24px;
+}
+.smile{
+    margin-left:5px;
+}

@@ -1,0 +1,25 @@
+.control-panel{
+    width:300px;
+    left:7%;
+    top:10px;
+    transform: translate(0);
+}
+#parent-div{
+    margin:30px;
+    top:0;
+    left:auto;
+    transform: translate(0);
+    right:7%;
+}
+.display{
+    width:320px;
+    top:230px;
+    left:7%;
+    transform:translate(0);
+} 
+#winners{
+    top:550px;
+}
+#best-three{
+    top: 620px;
+}
