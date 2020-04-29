@@ -107,7 +107,7 @@ function drawBestScores() {
         bestScores.forEach((item,index) => {
             let minutes = parseInt(item.scores.seconds/60);
             let seconds = item.scores.seconds%60;
-            bestScoresOutput+= `<p class='user-img'>${index+1}. ${appMainObj.cupArr[index]}</p><p class='user-name'>${item.name}</p><p class='user-time'>${minutes}m ${seconds}s</p><p class='user-steps'>${item.scores.steps}</p>`;
+            bestScoresOutput+= `<p class='user-img-b'>${index+1}. ${appMainObj.cupArr[index]}</p><p class='user-name-b'>${item.name}</p><p class='user-time-b'>${minutes}m ${seconds}s</p><p class='user-steps-b'>${item.scores.steps}</p>`;
         })
     }
     bestScoresDisplay.innerHTML =  bestScoresOutput;

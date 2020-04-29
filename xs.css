@@ -1,0 +1,249 @@
+*{
+    box-sizing:border-box;
+}
+body{
+    background-color: black;
+    user-select:none;
+}
+ #parent-div{
+    width:300px;
+    height:300px;
+    display:flex;
+    flex-wrap:wrap;
+    margin:50px auto;
+    justify-content: space-around;
+    align-items: center;
+    perspective: 1000px;
+    position:absolute;
+    top:210px;
+    left:50%;
+    transform: translate(-50%);
+}
+.card-item{
+    width:65px;
+    height:65px;
+    position:relative;
+    font-size:30px;
+    cursor: pointer;
+    transform-style:preserve-3d;
+    transition: transform .3s;
+} 
+.front-side, .back-side {
+    position:absolute;
+    border-radius:5px;
+    display:block;
+    width:65px;
+    height:65px;
+    padding:19px;
+    background-color:#4dabf7;
+    color:yellow;
+    backface-visibility: hidden;
+}
+.flip{
+    transform: rotateY(180deg);
+}
+.back-side{
+    transform:rotateY(180deg);
+    color:white;
+}
+.input-header{
+    color:white;
+    font-size:20px;
+}
+#fname{
+    height:25px;
+    font-size:18px;
+    width:200px;
+}
+.control-panel{
+    width:320px;
+    margin: 20px 0;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    transform: translate(-50%);
+}
+#res-button, #st-button{
+    width:60px;
+    height:30px;
+    text-align:center;
+    margin:0 15px 15px;
+    background-color:#4dabf7;
+    color:white;
+    border-radius:7px;
+    cursor: pointer;
+}
+#alert-place{
+    height:22px;
+    color:red;
+    font-size:18px;
+    margin-top:0;
+}
+#timer, #step{
+    font-size:18px;
+    color: yellowgreen;
+    margin: 10px 25px 0;
+    display:inline-block;
+}
+#timer{
+    width:65%;
+}
+#step{
+    width:35%;
+}
+#winners{
+    height:320px;
+    width:300px;
+    position:absolute;
+    right:50%;
+    transform:translate(50%);
+    top:580px;
+    background-color: white;
+    color:black;
+    border: 1px solid gray;
+    box-shadow: 0 0 5px 1px gray inset;
+    margin-bottom:20px;
+}
+.scores-head{
+    margin: 10px 0 0;
+    text-align:center;
+} 
+.display{
+    width:320px;
+    display:flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    position:absolute;
+    top:200px;
+    left:50%;
+    transform:translate(-50%);
+} 
+#fname[disabled] {
+    background-color:grey;
+}
+#st-button[disabled] {
+    background-color:grey;
+}
+.user-table-head{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+#user-scores{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.user-steps{
+    width:70px;
+}
+.user-time{
+    width:90px;
+}
+.user-name{
+    width:120px;
+    overflow:hidden;
+}
+.user-steps, .user-time, .user-name, .user-img{
+    margin-top:6px;
+    margin-bottom:0;
+}
+#best-three{
+    position:absolute;
+    left:50%;
+    transform: translate(-50%);
+    top: 915px;
+    height:170px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid gray;
+    box-shadow: 0 0 5px 1px gray inset;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+#best-scores{
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+}
+.user-steps-b{
+    width:60px;
+}
+.user-time-b{
+    width:90px;
+}
+.user-name-b{
+    width: 100px;
+    overflow:hidden;
+}
+.user-img-b{
+    width: 38px;
+}
+.user-steps-b, .user-time-b, .user-name-b, .user-img-b{
+    margin-top:6px;
+    margin-bottom:0;
+}
+.gold{
+    color:#d4af37;
+}
+.silver{
+    color:#C0C0C0;
+}
+.bronze{
+    color:#cd7f32;
+}
+.screen-change{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background-color:gray;
+    opacity:0;
+    z-index:0;
+    height:100%;
+    transition: opacity .3s linear;
+}
+.screen-change-active{
+    z-index:1;
+    opacity:.8;
+    transition: opacity .3s linear;
+}
+.win-alert{
+    height:180px;
+    width:300px;
+    position:fixed;
+    top:-200px;
+    left:50%;
+    /* transform: translate(-50%); */
+    background-color: blue;
+    color:greenyellow;
+    z-index:2;
+    border-radius:5px;
+    text-align:center;
+    transition: top .2s linear;
+}
+.win-alert-active{
+    top:50%;
+    transition: top .2s linear .2s;
+    transform: translate(-50%,-50%);
+}
+#play-again, #end-game{
+    width:40%;
+    margin:10px 5px;
+    text-align:center;
+    font-size:18px;
+    color:black;
+    background-color: #4dabf7;
+    padding:5px;
+    border-radius:7px;
+    cursor: pointer;
+    display:inline-block;
+}
+.smile{
+    margin-left:3px;
+    color:white
+}
+.alert-head{
+    text-align:center;
+}

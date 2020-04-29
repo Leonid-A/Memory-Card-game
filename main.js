@@ -17,6 +17,7 @@ const letters = /^[a-zA-Z]+$/;
 let players = [];
 let bestScores = [];
 let timerInterval;
+const bodyAll = document.body;
 const appMainObj = {
     cardsImageStoreage: [
         '<i data-id="1" class="fas fa-poo"></i>', 
@@ -59,7 +60,7 @@ const appMainObj = {
     newPlayer: {},
     cupArr:['<i class="fas fa-trophy gold"></i>','<i class="fas fa-trophy silver"></i>','<i class="fas fa-trophy bronze"></i>']
 }
-
+console.log(bodyAll);
 start()
     // game started
 function start(){
@@ -171,6 +172,7 @@ function checkWin(){
 function alertShow(){
     screenChange[0].classList.add("screen-change-active");
     winAlert[0].classList.add("win-alert-active");
+    bodyAll.style.overflow = "hidden";
 }
 
     //counting and give class flip

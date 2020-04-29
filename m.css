@@ -1,0 +1,14 @@
+#winners{
+    height:340px;
+    width:300px;
+    right:7%;
+    transform:translate(0);
+    top:750px;
+    margin-bottom:20px;
+}
+#best-three{
+    left:7%;
+    transform: translate(0);
+    top: 820px;
+    height:180px;
+}

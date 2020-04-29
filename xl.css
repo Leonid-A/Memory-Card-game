@@ -1,0 +1,71 @@
+#parent-div{
+    margin:50px auto;
+    position:relative;
+    right:0;
+}
+.input-header{
+    padding-right:20px;
+    font-size:25px;
+}
+#fname{
+    height:30px;
+    font-size:20px;
+}
+.control-panel{
+    width:350px;
+    margin: 20px auto;
+    left:15px;
+    top: 50px;
+}
+#res-button, #st-button{
+    margin:15px;
+}
+#timer, #step{
+    font-size:20px;
+    margin: 20px 50px 0;
+}
+#winners{
+    height:400px;
+    width:300px;
+    right:40px;
+    top:150px;
+    margin:0;
+}
+.scores-head{
+    margin: 15px 0 0;
+}
+.display{
+    margin:0 auto;
+    width:400px;
+    position:relative;
+    top:0;
+    left:0;
+}
+#alert-place{
+    height:20px;
+    font-size:16px;
+}
+.user-steps, .user-time, .user-name, .user-img{
+    margin-top:10px;
+}
+#best-three{
+    left:20px;
+    top: 350px;
+    height:180px;
+    width: 320px;
+}
+.user-steps-b{
+    width:60px;
+}
+.user-time-b{
+    width:80px;
+}
+.user-name-b{
+    width:110px;
+}
+.user-steps, .user-time, .user-name, .user-img{
+    margin-top:10px;
+}
+.user-img-b{
+    width: 58px;
+}

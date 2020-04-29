@@ -1,0 +1,6 @@
+@import "xs.css" only screen; 
+@import "s.css" only screen and (min-width: 576px);
+@import "m.css" only screen and (min-width: 768px);
+@import "l.css" only screen and (min-width: 992px);
+@import "xl.css" only screen and (min-width: 1200px);
+@import "xxl.css" only screen and (min-width: 1600px);
