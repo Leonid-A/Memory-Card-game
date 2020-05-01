@@ -60,7 +60,7 @@ const appMainObj = {
     newPlayer: {},
     cupArr:['<i class="fas fa-trophy gold"></i>','<i class="fas fa-trophy silver"></i>','<i class="fas fa-trophy bronze"></i>']
 }
-console.log(bodyAll);
+
 start()
     // game started
 function start(){
@@ -211,6 +211,7 @@ function firstPosition(){
 
     //reset button
 function resetAll(){
+    bodyAll.style.overflow = "visible";
     screenChange[0].classList.remove("screen-change-active");
     winAlert[0].classList.remove("win-alert-active");
     stopTimer();
@@ -253,6 +254,7 @@ function startAgain(){
     userName.value = appMainObj.gamerName;
     screenChange[0].classList.remove("screen-change-active");
     winAlert[0].classList.remove("win-alert-active");
+    bodyAll.style.overflow = "visible";
     gameStarted();
 }
 

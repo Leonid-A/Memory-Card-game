@@ -213,9 +213,8 @@ body{
     height:180px;
     width:300px;
     position:fixed;
-    top:-200px;
+    top:-220px;
     left:50%;
-    /* transform: translate(-50%); */
     background-color: blue;
     color:greenyellow;
     z-index:2;

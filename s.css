@@ -40,12 +40,11 @@
 .win-alert{
     height:200px;
     width:500px;
-    top:-220px;
     border-radius:7px;
 }
-.win-alert-active{
+/* .win-alert-active{
     top:50px;
-}
+} */
 #play-again, #end-game{
     margin:20px 10px;
     font-size:24px;
